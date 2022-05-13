@@ -2,10 +2,11 @@ package handlers
 
 import (
 	"encoding/json"
+	"fmt"
 	"io/ioutil"
 	"net/http"
-	"training_golang_kedua/connection"
-	"training_golang_kedua/structs"
+	"training_golang_ketiga/connection"
+	"training_golang_ketiga/structs"
 
 	"github.com/gorilla/mux"
 )
@@ -13,13 +14,14 @@ import (
 func InsertProduct(w http.ResponseWriter, r *http.Request) {
 	payloads, _ := ioutil.ReadAll(r.Body)
 
-	var db_training_kedua structs.Product
+	var db_training_ketiga structs.Product
+	fmt.Println(db_training_ketiga)
 
-	json.Unmarshal(payloads, &db_training_kedua)
+	json.Unmarshal(payloads, &db_training_ketiga)
 
-	connection.DB.Create(&db_training_kedua)
+	connection.DB.Create(&db_training_ketiga)
 
-	res := structs.Result{Code: 200, Data: db_training_kedua, Message: "Produk Berhasil Ditambahkan"}
+	res := structs.Result{Code: 200, Data: db_training_ketiga, Message: "Produk Berhasil Ditambahkan"}
 
 	result, err := json.Marshal(res)
 
@@ -37,15 +39,18 @@ func UpdateProduct(w http.ResponseWriter, r *http.Request) {
 	id_produk := vars["id"]
 	payloads, _ := ioutil.ReadAll(r.Body)
 
-	var db_training_kedua structs.Product
+	var db_training_ketiga structs.Product
 
-	connection.DB.First(&db_training_kedua, id_produk)
+	connection.DB.First(&db_training_ketiga, id_produk)
 
-	json.Unmarshal(payloads, &db_training_kedua)
+	json.Unmarshal(payloads, &db_training_ketiga)
 
-	connection.DB.Model(&db_training_kedua).Update(db_training_kedua)
+	connection.DB.Model(&db_training_ketiga).Update(db_training_ketiga)
+	if !db_training_ketiga.Status {
+		connection.DB.Model(&db_training_ketiga).Updates(map[string]interface{}{"status": false})
+	}
 
-	res := structs.Result{Code: 200, Data: db_training_kedua, Message: "Produk Berhasil Diupdate"}
+	res := structs.Result{Code: 200, Data: db_training_ketiga, Message: "Produk Berhasil Diupdate"}
 
 	result, err := json.Marshal(res)
 
@@ -62,12 +67,12 @@ func DeleteProduk(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	id_produk := vars["id"]
 
-	var db_training_kedua structs.Product
+	var db_training_ketiga structs.Product
 
-	connection.DB.First(&db_training_kedua, id_produk)
-	connection.DB.Delete(&db_training_kedua)
+	connection.DB.First(&db_training_ketiga, id_produk)
+	connection.DB.Delete(&db_training_ketiga)
 
-	res := structs.Result{Code: 200, Data: db_training_kedua, Message: "Produk Berhasil Dihapus"}
+	res := structs.Result{Code: 200, Data: db_training_ketiga, Message: "Produk Berhasil Dihapus"}
 
 	result, err := json.Marshal(res)
 
@@ -80,15 +85,15 @@ func DeleteProduk(w http.ResponseWriter, r *http.Request) {
 	w.Write(result)
 }
 
-func GetProduk(w http.ResponseWriter, r *http.Request) {
+func GetProduct(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	id_produk := vars["id"]
 
-	var db_training_kedua structs.Product
+	var db_training_ketiga structs.Product
 
-	connection.DB.First(&db_training_kedua, id_produk)
+	connection.DB.First(&db_training_ketiga, id_produk)
 
-	res := structs.Result{Code: 200, Data: db_training_kedua, Message: "Produk Ada"}
+	res := structs.Result{Code: 200, Data: db_training_ketiga, Message: "Produk Ada"}
 	result, err := json.Marshal(res)
 
 	if err != nil {
@@ -100,16 +105,16 @@ func GetProduk(w http.ResponseWriter, r *http.Request) {
 	w.Write(result)
 }
 
-func GetProduks(w http.ResponseWriter, r *http.Request) {
+func GetProducts(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	limit := vars["limit"]
 	offset := vars["offset"]
 
-	db_training_keduas := []structs.Product{}
+	db_training_ketigas := []structs.Product{}
 
-	connection.DB.Limit(limit).Offset(offset).Find(&db_training_keduas)
+	connection.DB.Limit(limit).Offset(offset).Find(&db_training_ketigas)
 
-	res := structs.Result{Code: 200, Data: db_training_keduas, Message: "Produk Ada"}
+	res := structs.Result{Code: 200, Data: db_training_ketigas, Message: "Produk Ada"}
 	result, err := json.Marshal(res)
 
 	if err != nil {

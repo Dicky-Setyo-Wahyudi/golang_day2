@@ -4,10 +4,17 @@ package structs
 type Users struct {
 	ID         int    `json:"id"`
 	Username   string `json:"username"`
+	Password   string `json:"password"`
 	Email      string `json:"email"`
 	No_Telepon string `json:"no_telepon"`
 	Role       string `json:"role"`
 	Status     bool   `json:"status"`
+}
+
+type UsersLogin struct {
+	ID       int    `json:"id"`
+	Username string `json:"username"`
+	Password string `json:"password"`
 }
 
 type Product struct {

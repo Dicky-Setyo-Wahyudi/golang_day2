@@ -1,8 +1,8 @@
 package main
 
 import (
-	"training_golang_kedua/connection"
-	"training_golang_kedua/handlers"
+	"training_golang_ketiga/connection"
+	"training_golang_ketiga/handlers"
 )
 
 func main() {
