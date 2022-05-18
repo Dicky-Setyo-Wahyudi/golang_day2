@@ -2,7 +2,7 @@ package connection
 
 import (
 	"log"
-	"training_golang_ketiga/structs"
+	"training_golang_keempat/structs"
 
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/mysql"
@@ -14,7 +14,7 @@ var (
 )
 
 func Connect() {
-	DB, Err = gorm.Open("mysql", "root:@tcp(127.0.0.1:3306)/training_ketiga")
+	DB, Err = gorm.Open("mysql", "root:@tcp(127.0.0.1:3306)/training_keempat")
 	// Untuk mysql merupakan database yang akan digunakan
 	// Untuk root merupakan username dari database apabila ada password maka menjadi root:nama_password
 	// @tcp(127.0.0.1:3306) IP localhost dan 3306 port mysql
