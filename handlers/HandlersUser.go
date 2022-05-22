@@ -17,6 +17,15 @@ func HashPassword(password string) (string, error) {
 }
 
 func InsertUser(w http.ResponseWriter, r *http.Request) {
+	// semua origin mendapat ijin akses
+	w.Header().Set("Access-Control-Allow-Origin", "*")
+
+	// semua method diperbolehkan masuk
+	w.Header().Set("Access-Control-Allow-Methods", "*")
+
+	// semua header diperbolehkan untuk disisipkan
+	w.Header().Set("Access-Control-Allow-Headers", "*")
+
 	payloads, _ := ioutil.ReadAll(r.Body)
 
 	var db_user structs.Users
@@ -41,6 +50,15 @@ func InsertUser(w http.ResponseWriter, r *http.Request) {
 }
 
 func UpdateUser(w http.ResponseWriter, r *http.Request) {
+	// semua origin mendapat ijin akses
+	w.Header().Set("Access-Control-Allow-Origin", "*")
+
+	// semua method diperbolehkan masuk
+	w.Header().Set("Access-Control-Allow-Methods", "*")
+
+	// semua header diperbolehkan untuk disisipkan
+	w.Header().Set("Access-Control-Allow-Headers", "*")
+
 	vars := mux.Vars(r)
 	id_user := vars["id"]
 	payloads, _ := ioutil.ReadAll(r.Body)
@@ -69,6 +87,15 @@ func UpdateUser(w http.ResponseWriter, r *http.Request) {
 }
 
 func DeleteUser(w http.ResponseWriter, r *http.Request) {
+	// semua origin mendapat ijin akses
+	w.Header().Set("Access-Control-Allow-Origin", "*")
+
+	// semua method diperbolehkan masuk
+	w.Header().Set("Access-Control-Allow-Methods", "*")
+
+	// semua header diperbolehkan untuk disisipkan
+	w.Header().Set("Access-Control-Allow-Headers", "*")
+
 	vars := mux.Vars(r)
 	id_user := vars["id"]
 
@@ -91,6 +118,15 @@ func DeleteUser(w http.ResponseWriter, r *http.Request) {
 }
 
 func GetUser(w http.ResponseWriter, r *http.Request) {
+	// semua origin mendapat ijin akses
+	w.Header().Set("Access-Control-Allow-Origin", "*")
+
+	// semua method diperbolehkan masuk
+	w.Header().Set("Access-Control-Allow-Methods", "*")
+
+	// semua header diperbolehkan untuk disisipkan
+	w.Header().Set("Access-Control-Allow-Headers", "*")
+
 	vars := mux.Vars(r)
 	id_user := vars["id"]
 
@@ -111,6 +147,15 @@ func GetUser(w http.ResponseWriter, r *http.Request) {
 }
 
 func GetUsers(w http.ResponseWriter, r *http.Request) {
+	// semua origin mendapat ijin akses
+	w.Header().Set("Access-Control-Allow-Origin", "*")
+
+	// semua method diperbolehkan masuk
+	w.Header().Set("Access-Control-Allow-Methods", "*")
+
+	// semua header diperbolehkan untuk disisipkan
+	w.Header().Set("Access-Control-Allow-Headers", "*")
+
 	vars := mux.Vars(r)
 	limit := vars["limit"]
 	offset := vars["offset"]
@@ -118,6 +163,32 @@ func GetUsers(w http.ResponseWriter, r *http.Request) {
 	db_users := []structs.Users{}
 
 	connection.DB.Limit(limit).Offset(offset).Find(&db_users)
+
+	res := structs.Result{Code: 200, Data: db_users, Message: "User Ada"}
+	result, err := json.Marshal(res)
+
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+	}
+
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(http.StatusOK)
+	w.Write(result)
+}
+
+func GetUserss(w http.ResponseWriter, r *http.Request) {
+	// semua origin mendapat ijin akses
+	w.Header().Set("Access-Control-Allow-Origin", "*")
+
+	// semua method diperbolehkan masuk
+	w.Header().Set("Access-Control-Allow-Methods", "*")
+
+	// semua header diperbolehkan untuk disisipkan
+	w.Header().Set("Access-Control-Allow-Headers", "*")
+
+	db_users := []structs.Users{}
+
+	connection.DB.Find(&db_users)
 
 	res := structs.Result{Code: 200, Data: db_users, Message: "User Ada"}
 	result, err := json.Marshal(res)

@@ -11,6 +11,15 @@ import (
 )
 
 func InsertProduct(w http.ResponseWriter, r *http.Request) {
+	// semua origin mendapat ijin akses
+	w.Header().Set("Access-Control-Allow-Origin", "*")
+
+	// semua method diperbolehkan masuk
+	w.Header().Set("Access-Control-Allow-Methods", "*")
+
+	// semua header diperbolehkan untuk disisipkan
+	w.Header().Set("Access-Control-Allow-Headers", "*")
+
 	payloads, _ := ioutil.ReadAll(r.Body)
 
 	var db_product structs.Product
@@ -33,6 +42,15 @@ func InsertProduct(w http.ResponseWriter, r *http.Request) {
 }
 
 func UpdateProduct(w http.ResponseWriter, r *http.Request) {
+	// semua origin mendapat ijin akses
+	w.Header().Set("Access-Control-Allow-Origin", "*")
+
+	// semua method diperbolehkan masuk
+	w.Header().Set("Access-Control-Allow-Methods", "*")
+
+	// semua header diperbolehkan untuk disisipkan
+	w.Header().Set("Access-Control-Allow-Headers", "*")
+
 	vars := mux.Vars(r)
 	id_produk := vars["id"]
 	payloads, _ := ioutil.ReadAll(r.Body)
@@ -62,6 +80,15 @@ func UpdateProduct(w http.ResponseWriter, r *http.Request) {
 }
 
 func DeleteProduk(w http.ResponseWriter, r *http.Request) {
+	// semua origin mendapat ijin akses
+	w.Header().Set("Access-Control-Allow-Origin", "*")
+
+	// semua method diperbolehkan masuk
+	w.Header().Set("Access-Control-Allow-Methods", "*")
+
+	// semua header diperbolehkan untuk disisipkan
+	w.Header().Set("Access-Control-Allow-Headers", "*")
+
 	vars := mux.Vars(r)
 	id_produk := vars["id"]
 
@@ -84,6 +111,15 @@ func DeleteProduk(w http.ResponseWriter, r *http.Request) {
 }
 
 func GetProduct(w http.ResponseWriter, r *http.Request) {
+	// semua origin mendapat ijin akses
+	w.Header().Set("Access-Control-Allow-Origin", "*")
+
+	// semua method diperbolehkan masuk
+	w.Header().Set("Access-Control-Allow-Methods", "*")
+
+	// semua header diperbolehkan untuk disisipkan
+	w.Header().Set("Access-Control-Allow-Headers", "*")
+
 	vars := mux.Vars(r)
 	id_produk := vars["id"]
 
@@ -104,6 +140,15 @@ func GetProduct(w http.ResponseWriter, r *http.Request) {
 }
 
 func GetProducts(w http.ResponseWriter, r *http.Request) {
+	// semua origin mendapat ijin akses
+	w.Header().Set("Access-Control-Allow-Origin", "*")
+
+	// semua method diperbolehkan masuk
+	w.Header().Set("Access-Control-Allow-Methods", "*")
+
+	// semua header diperbolehkan untuk disisipkan
+	w.Header().Set("Access-Control-Allow-Headers", "*")
+
 	vars := mux.Vars(r)
 	limit := vars["limit"]
 	offset := vars["offset"]
@@ -111,6 +156,32 @@ func GetProducts(w http.ResponseWriter, r *http.Request) {
 	db_products := []structs.Product{}
 
 	connection.DB.Limit(limit).Offset(offset).Find(&db_products)
+
+	res := structs.Result{Code: 200, Data: db_products, Message: "Produk Ada"}
+	result, err := json.Marshal(res)
+
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+	}
+
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(http.StatusOK)
+	w.Write(result)
+}
+
+func GetProductss(w http.ResponseWriter, r *http.Request) {
+	// semua origin mendapat ijin akses
+	w.Header().Set("Access-Control-Allow-Origin", "*")
+
+	// semua method diperbolehkan masuk
+	w.Header().Set("Access-Control-Allow-Methods", "*")
+
+	// semua header diperbolehkan untuk disisipkan
+	w.Header().Set("Access-Control-Allow-Headers", "*")
+
+	db_products := []structs.Product{}
+
+	connection.DB.Find(&db_products)
 
 	res := structs.Result{Code: 200, Data: db_products, Message: "Produk Ada"}
 	result, err := json.Marshal(res)
