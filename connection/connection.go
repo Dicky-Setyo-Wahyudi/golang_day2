@@ -14,7 +14,7 @@ var (
 )
 
 func Connect() {
-	DB, Err = gorm.Open("mysql", "root:@tcp(127.0.0.1:3306)/training_keempat")
+	DB, Err = gorm.Open("mysql", "dicky:kqhWHoN5hhpvc3JG@tcp(167.172.73.736:9092)/dicky")
 	// Untuk mysql merupakan database yang akan digunakan
 	// Untuk root merupakan username dari database apabila ada password maka menjadi root:nama_password
 	// @tcp(127.0.0.1:3306) IP localhost dan 3306 port mysql
